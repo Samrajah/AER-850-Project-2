@@ -37,7 +37,7 @@ validation_generator = validation_datagen.flow_from_directory(
     class_mode='categorical'
 )
 
-# Step 2: Neural Network Analysis
+# Step 2 & 3: Neural Network Analysis & Hypermeter Analysis
 import tensorflow as tf
 from tensorflow.keras import layers, models
 
@@ -126,3 +126,5 @@ plt.ylabel('Loss')
 plt.legend(['Train', 'Validation'], loc='upper left')
 
 plt.show()
+
+model.save('Project_2_model.h5')
