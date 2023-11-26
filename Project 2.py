@@ -5,9 +5,9 @@ from keras.preprocessing.image import ImageDataGenerator
 input_shape = (100, 100, 3)
 
 # Define data directories
-train_data_dir = 'Project 2 Data.zip/Data/train'
-validation_data_dir = 'Project 2 Data.zip/Data/validation'
-test_data_dir = 'Project 2 Data.zip/Data/test'
+train_data_dir = r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Test'
+validation_data_dir = r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Train'
+test_data_dir = r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Validation'
 
 # Set up data augmentation for training data
 train_datagen = ImageDataGenerator(
