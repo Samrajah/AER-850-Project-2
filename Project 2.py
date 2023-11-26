@@ -75,7 +75,7 @@ model.compile(optimizer='adam',
 # Display the model summary
 model.summary()
 
-# Step 3: Neural Network Analysis
+# Step 4: Model Evaluation
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 test_generator = test_datagen.flow_from_directory(
@@ -90,3 +90,39 @@ test_loss, test_accuracy = model.evaluate(test_generator)
 # Print the evaluation results
 print(f'Test Loss: {test_loss}')
 print(f'Test Accuracy: {test_accuracy}')
+
+import matplotlib.pyplot as plt
+
+epochs = 30 
+
+# Train the model and store the history
+history = model.fit(
+    train_generator,
+    steps_per_epoch=train_generator.samples // batch_size,
+    epochs=epochs,  # Specify the number of epochs
+    validation_data=validation_generator,
+    validation_steps=validation_generator.samples // batch_size
+)
+
+# Plot training history
+plt.figure(figsize=(12, 4))
+
+# Plot training & validation accuracy values
+plt.subplot(1, 2, 1)
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Model Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend(['Train', 'Validation'], loc='upper left')
+
+# Plot training & validation loss values
+plt.subplot(1, 2, 2)
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend(['Train', 'Validation'], loc='upper left')
+
+plt.show()
