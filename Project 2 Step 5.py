@@ -1,5 +1,4 @@
-from keras.models import load_model
-from keras.preprocessing import image
+import os
 import numpy as np
 from keras.models import load_model
 from keras.preprocessing import image
@@ -21,20 +20,25 @@ def make_prediction(model, test_image_array):
     return predicted_class
 
 def main():
-    # Define the path to the test image
-    test_image_path = r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Test\Medium'  
+    # Define the path to the folder containing test images
+    test_folder_path = r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Test\Medium'
 
     # Load the trained model
     model = load_model('Project_2_model.h5')
 
-    # Load and preprocess the test image
-    test_image_array = load_and_preprocess_image(test_image_path)
+    # Iterate through all files in the test folder
+    for filename in os.listdir(test_folder_path):
+        if filename.endswith(".jpg"):  # Adjust the extension based on your image format
+            test_image_path = os.path.join(test_folder_path, filename)
 
-    # Make a prediction
-    predicted_class = make_prediction(model, test_image_array)
+            # Load and preprocess the test image
+            test_image_array = load_and_preprocess_image(test_image_path)
 
-    # Display the prediction
-    print(f'The predicted class is: {predicted_class}')
+            # Make a prediction
+            predicted_class = make_prediction(model, test_image_array)
+
+            # Display the prediction
+            print(f'The predicted class for {filename} is: {predicted_class}')
 
 if __name__ == "__main__":
     main()
