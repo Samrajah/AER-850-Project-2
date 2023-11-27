@@ -29,7 +29,7 @@ def main():
     # Load the trained model
     model = load_model('Project_2_model.h5')
 
-    # Class names corresponding to numerical labels
+   
     class_names = {
         0: 'Large Crack',
         1: 'Medium Crack',
