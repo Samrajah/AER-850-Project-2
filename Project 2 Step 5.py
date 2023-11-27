@@ -17,28 +17,41 @@ def make_prediction(model, test_image_array):
 
     # Get the predicted class
     predicted_class = np.argmax(prediction)
-    return predicted_class
+    return predicted_class, prediction.flatten()
 
 def main():
-    # Define the path to the folder containing test images
-    test_folder_path = r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Test\Medium'
+    # Define the paths to the test images
+    test_image_paths = [
+        r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Test\Medium\Crack__20180419_06_19_09,915.bmp',
+        r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Project 2 Data\Data\Test\Large\Crack__20180419_13_29_14,846.bmp'
+    ]
 
     # Load the trained model
     model = load_model('Project_2_model.h5')
 
-    # Iterate through all files in the test folder
-    for filename in os.listdir(test_folder_path):
-        if filename.endswith(".jpg"):  # Adjust the extension based on your image format
-            test_image_path = os.path.join(test_folder_path, filename)
+    # Class names corresponding to numerical labels
+    class_names = {
+        0: 'Large Crack',
+        1: 'Medium Crack',
+        2: 'Small Crack',
+        3: 'No Crack'
+    }
 
-            # Load and preprocess the test image
-            test_image_array = load_and_preprocess_image(test_image_path)
+    # Iterate through the specified test images
+    for test_image_path in test_image_paths:
+        # Load and preprocess the test image
+        test_image_array = load_and_preprocess_image(test_image_path)
 
-            # Make a prediction
-            predicted_class = make_prediction(model, test_image_array)
+        # Make a prediction
+        predicted_class, class_probabilities = make_prediction(model, test_image_array)
 
-            # Display the prediction
-            print(f'The predicted class for {filename} is: {predicted_class}')
+        # Display the prediction
+        print(f'\nImage: {os.path.basename(test_image_path)}')
+        print(f'Predicted Class: {class_names[predicted_class]}')
+
+        # Display the percentages for each class
+        for class_label, probability in enumerate(class_probabilities):
+            print(f'Percentage for {class_names[class_label]}: {probability * 100:.2f}%')
 
 if __name__ == "__main__":
     main()

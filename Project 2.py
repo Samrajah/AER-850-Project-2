@@ -11,13 +11,13 @@ test_data_dir = r'C:\Users\samby\OneDrive\Documents\GitHub\AER-850-Project-2\Pro
 
 # Set up data augmentation for training data
 train_datagen = ImageDataGenerator(
-    rescale=1./255,  # Rescaling to normalize pixel values
+    rescale=1./255,  
     shear_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True
 )
 
-# Rescale validation data (no data augmentation for validation)
+# Rescale validation data
 validation_datagen = ImageDataGenerator(rescale=1./255)
 
 # Create data generators
@@ -62,14 +62,14 @@ model.add(layers.Flatten())
 
 # Fully connected layers
 model.add(layers.Dense(512, activation='relu'))
-model.add(layers.Dropout(0.5))  # Dropout layer to reduce overfitting
+model.add(layers.Dropout(0.5))  
 
 # Output layer
 model.add(layers.Dense(4, activation='softmax'))  # Assuming 4 output classes
 
 # Compile the model
 model.compile(optimizer='adam',
-              loss='categorical_crossentropy',  # Adjust loss function based on your task
+              loss='categorical_crossentropy',  
               metrics=['accuracy'])
 
 # Display the model summary
